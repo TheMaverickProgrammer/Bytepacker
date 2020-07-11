@@ -18,11 +18,11 @@ Bytepacker utilities expect a uint8_t array of static size. This is important be
 
 # Serializing
 `start` is the index position to begin reading the input buffer.
-The conventional way to serialize with Bytepacker is to use the `size_t pack<start, len>(buffer, data)` utility function. It will return the number of bytes packed successfully. If no bytes could be packed, then `zero` is returned. You can use the bytes written and the expected
+The conventional way to serialize with Bytepacker is to use the `size_t pack<start>(buffer, data)` utility function. It will return the number of bytes packed successfully. If no bytes could be packed, then `zero` is returned. You can use the bytes written and the expected
 bytes written to assert that your buffer has been defined well enough to store all your data.
 
 # Deserializing
-The conventional way to deserialize with Bytepacker is to use the `auto unpack<start>(buffer)` utility function.  It returns an `array_buffer<len>` object where `len-1` is the number of bytes stored in the array.
+The conventional way to deserialize with Bytepacker is to use the `auto unpack<start, sizeof(T)>(buffer)` utility function.  It returns an `array_buffer<len>` object where `len-1` is the number of bytes stored in the array. `T` is the type of object you intend to cast to after successfully reading the buffer. Read on below to learn how to cast into the final type.
 
 # Array Buffers
 Unpacking will return a type `array_buffer<len>` which acts just like `std::array<uint8_t, len>` and it also has a `.to<T>()` function to safely cast the buffer to your target object type regardless of your platform's host byte order is.
